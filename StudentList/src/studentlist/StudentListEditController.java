@@ -30,7 +30,7 @@ import student.StaticData;
  *
  * @author Карина
  */
-public class StudentListEditController implements Initializable 
+public class StudentListEditController implements Initializable  //controller with form edit
 {
     private Student st = new Student();
     @FXML
@@ -52,7 +52,7 @@ public class StudentListEditController implements Initializable
     @FXML
     private DatePicker dateOfDelay;
     @FXML
-     void onClickEdit(ActionEvent event)
+     void onClickEdit(ActionEvent event)    // method that run when we click on edit button
     {
         if(!nameField.getText().matches("^\\D*$"))
         {

@@ -9,7 +9,7 @@ package student;
  *
  * @author Карина
  */
-public class Student 
+public class Student            //class that include methods of student profile
 {
     
     private String name;
@@ -19,7 +19,7 @@ public class Student
     private String department;
     private String course;
     private String speciality;
-    private String delayDate;
+    private String dateOfDelay;
     
         
     public Student()
@@ -29,7 +29,7 @@ public class Student
     
         
     public Student(String name, String surname, String birthday,  
-                   String department,  String speciality,String course,String group, String delayDate )
+                   String department,  String speciality,String course,String group, String dateOfDelay )
     {
         this.name = name;
         this.surname = surname;
@@ -38,7 +38,7 @@ public class Student
         this.speciality = speciality;
         this.course = course;
         this.group = group;
-        this.delayDate = delayDate;
+        this.dateOfDelay = dateOfDelay;
     }
 
     public String getName() {
@@ -98,11 +98,11 @@ public class Student
     }
     
     public String getDelayDate() {
-        return birthday;
+        return dateOfDelay;
     }
 
-    public void setDelayDate(String delayDate) {
-        this.delayDate = delayDate;
+    public void setDelayDate(String dateOfDelay) {
+        this.dateOfDelay = dateOfDelay;
     }
     
     

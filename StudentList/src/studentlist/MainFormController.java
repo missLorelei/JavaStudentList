@@ -132,12 +132,14 @@ public class MainFormController implements Initializable
         tableGroup.setCellValueFactory(new PropertyValueFactory<Student, String>("Group"));
         tableDate.setCellValueFactory(new PropertyValueFactory<Student, String>("DelayDate"));
         table.setItems(StaticData.data);
-        Student st1 = new Student("Sasha", "Zyryk", "2015-02-02", "Computer science", "PZKS", "Second","243", "2015-02-02");
-        Student st2 = new Student("Sasha", "Zyryk", "2015-02-02", "Computer science", "PZKS", "Second","243", "2015-02-02");
-        Student st3 = new Student("Sasha", "Zyryk", "2015-02-02", "Computer science", "PZKS", "Second","243", "2015-02-02");
+        Student st1 = new Student("Karin", "Wittal", "1996-08-03", "Computer science", "PZKS", "Second","243", "2015-02-01");
+        Student st2 = new Student("Konstantin", "Vikyrchak", "1995-09-09", "Computer science", "PZKS", "Second","243", "2015-03-02");
+        Student st3 = new Student("Artem", "Dzhuran", "1996-04-07", "Computer science", "PZKS", "Second","243", "2015-03-29");
+        Student st4 = new Student("Vanya", "Balan", "1996-10-09", "Computer science", "PZKS", "Second","243", "2015-03-18");
         StaticData.data.add(st1);
         StaticData.data.add(st2);
         StaticData.data.add(st3);
+        StaticData.data.add(st4);
 
 
 //======Event change selected row        
@@ -167,8 +169,9 @@ public class MainFormController implements Initializable
                 
                 labelGroup.setText(st.getGroup());
                
-                labelDelay.setText(st.getDelayDate());
+                
                 labelCourse.setText(st.getCourse());
+                labelDelay.setText(st.getDelayDate());
             }
         });
     }   
