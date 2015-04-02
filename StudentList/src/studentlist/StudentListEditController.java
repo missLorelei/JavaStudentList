@@ -140,13 +140,15 @@ public class StudentListEditController implements Initializable  //controller wi
         listOfCourse.add("Third");
         listOfCourse.add("Fourth");
         listOfCourse.add("Fifth");
-      //  courseChoiceBox.setItems(listOfCourse);
+        courseChoiceBox.setItems(listOfCourse);
+        courseChoiceBox.setValue(st.getCourse());
         
         ObservableList<String> listOfDepartment = FXCollections.observableArrayList();
         listOfDepartment.add("Computer science");
         listOfDepartment.add("Physics");
         listOfDepartment.add("Mathematics");
-      //  departmentChoiceBox.setItems(listOfDepartment);
+        departmentChoiceBox.setItems(listOfDepartment);
+        departmentChoiceBox.setValue(st.getDepartment());
         
         ObservableList<String> listOfComputerScines = FXCollections.observableArrayList();
         listOfComputerScines.add("Software engineering");
@@ -164,28 +166,28 @@ public class StudentListEditController implements Initializable  //controller wi
         listOfPhysics.add("Department of Solid State Physics");
         listOfPhysics.add("Department of Physics of Semiconductors and Nanostructures");
         
-       if (st.getDepartment().equals("Department of Computer Science"))
+       if (st.getDepartment().equals("Computer science"))
              {
-                departmentChoiceBox.getSelectionModel().select("Department of Computer Science");
+                departmentChoiceBox.getSelectionModel().select("Computer science");
                 specialityChoiceBox.setItems(listOfComputerScines);
-                specialityChoiceBox.getSelectionModel().select("PZKS");
+                specialityChoiceBox.setValue(st.getSpeciality());
              } 
        
        if (st.getDepartment().equals("Mathematics"))
              {
-                departmentChoiceBox.getSelectionModel().select("Faculty of Mathematics");
+                departmentChoiceBox.getSelectionModel().select("Mathematics");
                 specialityChoiceBox.setItems(listOfMath);
-                specialityChoiceBox.getSelectionModel().select("Department of Applied Mathematics");
+                specialityChoiceBox.setValue(st.getSpeciality());
              } 
      
-       if (st.getDepartment().equals("Physics Department"))
+       if (st.getDepartment().equals("Physics"))
              {
                 departmentChoiceBox.getSelectionModel().select("Physics");
                 specialityChoiceBox.setItems(listOfPhysics);
-                specialityChoiceBox.getSelectionModel().select("Department of Physics");
+                specialityChoiceBox.setValue(st.getSpeciality());
              } 
        
-        departmentChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() 
+    /*    departmentChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() 
         {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) 
@@ -210,7 +212,7 @@ public class StudentListEditController implements Initializable  //controller wi
                  }
 
             }
-    });
+    });*/
     }    
     
 }
