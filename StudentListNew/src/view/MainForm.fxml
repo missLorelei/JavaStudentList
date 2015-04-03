@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.collections.FXCollections ?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.79" prefHeight="338.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainFormController">
+   <children>
+      <ImageView fitHeight="338.0" fitWidth="647.0" opacity="0.78" pickOnBounds="true">
+         <image>
+            <Image url="@../images/107295_or.jpg" />
+         </image>
+      </ImageView>
+   <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.89" prefHeight="338.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+      <top>
+         <MenuBar BorderPane.alignment="CENTER">
+           <menus>
+             <Menu mnemonicParsing="false" text="File">
+               <items>
+                 <MenuItem mnemonicParsing="false" text="Close" />
+               </items>
+             </Menu>
+             <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                 <MenuItem mnemonicParsing="false" text="Delete" />
+               </items>
+             </Menu>
+             <Menu mnemonicParsing="false" text="Help">
+               <items>
+                 <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+             </Menu>
+           </menus>
+         </MenuBar>
+      </top>
+      <center>
+         <SplitPane dividerPositions="0.38294314381270905" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <items>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="373.0" prefWidth="201.0">
+                  <children>
+                     <TableView fx:id="table" layoutX="-12.0" layoutY="24.0" prefHeight="373.0" prefWidth="204.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                       <columns>
+                         <TableColumn fx:id="tableSurname" prefWidth="111.0" text="Surname" />
+                         <TableColumn fx:id="tableGroup" prefWidth="58.0" text="Group" />
+                           <TableColumn fx:id="tableDate" prefWidth="74.0" text="Date" />
+                       </columns>
+                     </TableView>
+                  </children>
+               </AnchorPane>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="440.0" style="-fx-background-color: #c0ffa7;">
+                  <children>
+                     <VBox layoutX="291.0" layoutY="54.0" prefHeight="213.0" prefWidth="122.0" spacing="10.0">
+                        <children>
+                           <Button fx:id="bNew" mnemonicParsing="false" onAction="#onClickButtonNew" prefHeight="69.0" prefWidth="115.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="New">
+                              <font>
+                                 <Font name="Buxton Sketch" size="30.0" />
+                              </font>
+                              </Button>
+                           <Button fx:id="bEdit" mnemonicParsing="false" onAction="#onClickButtonEdit" prefHeight="69.0" prefWidth="115.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="Edit">
+                              <font>
+                                 <Font name="Buxton Sketch" size="30.0" />
+                              </font>
+                              </Button>
+                           <Button fx:id="bDelete" mnemonicParsing="false" onAction="#onClickButtonDelete" prefHeight="69.0" prefWidth="115.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="Delete">
+                              <font>
+                                 <Font name="Buxton Sketch" size="30.0" />
+                              </font>
+                              </Button>
+                        </children>
+                     </VBox>
+                     <GridPane layoutX="14.0" layoutY="47.0" prefHeight="240.0" prefWidth="262.0">
+                       <columnConstraints>
+                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="108.0" />
+                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="152.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                           <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                        <children>
+                           <Label text="Name">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label text="Surname" GridPane.rowIndex="1">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label text="Date of Delay" GridPane.rowIndex="7">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="labelName" GridPane.columnIndex="1">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="labelSurname" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="labelDelay" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label text="Birthday" GridPane.rowIndex="2">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="labelBirthday" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label text="Department" GridPane.rowIndex="3">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="labelDepartment" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label text="Speciality" GridPane.rowIndex="4">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="labelSpeciality" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label text="Group" GridPane.rowIndex="5">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="labelGroup" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label text="Course" GridPane.rowIndex="6">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="labelCourse" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                              <font>
+                                 <Font name="Buxton Sketch" size="20.0" />
+                              </font>
+                           </Label>
+                        </children>
+                     </GridPane>
+                     <Label layoutX="14.0" text="Personal information">
+                        <font>
+                           <Font name="Buxton Sketch" size="30.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </AnchorPane>
+           </items>
+         </SplitPane>
+      </center>
+   </BorderPane>
+   </children>
+</AnchorPane>
