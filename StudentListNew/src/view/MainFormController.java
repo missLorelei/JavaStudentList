@@ -92,7 +92,7 @@ public class MainFormController implements Initializable
         Parent root = FXMLLoader.load(getClass().getResource(arg));
         Scene scene = new Scene(root);
         Image icon = new Image(getClass().getResourceAsStream("/images/logo.png"));
-        stage.setTitle("Edit");
+        stage.setTitle("Edit/Add");
         stage.getIcons().add(icon);
         stage.setResizable(false);
         stage.setScene(scene);

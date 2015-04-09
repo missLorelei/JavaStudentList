@@ -51,6 +51,7 @@ public class StudentListEditController implements Initializable  //controller wi
     private Button bEdit;
     @FXML
     private DatePicker dateOfDelay;
+    @FXML
     void onClickEdit(ActionEvent event)    // method that run when we click on edit button
     {
         if(!nameField.getText().matches("^\\D*$"))
@@ -95,8 +96,8 @@ public class StudentListEditController implements Initializable  //controller wi
             st.setGroup(groupField.getText());
             st.setDelayDate(dateOfDelay.getValue().toString());
             
-
-            StaticData.data.add(st);
+            StaticData.data.set(StaticData.selectedRow, st);
+            //StaticData.data.add(st);
             Stage stage = (Stage) bEdit.getScene().getWindow();
             //close form Message
             stage.close();
@@ -186,7 +187,7 @@ public class StudentListEditController implements Initializable  //controller wi
                 specialityChoiceBox.setValue(st.getSpeciality());
              } 
        
-    /*    departmentChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() 
+        departmentChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() 
         {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) 
@@ -198,20 +199,25 @@ public class StudentListEditController implements Initializable  //controller wi
                     specialityChoiceBox.setItems(listOfComputerScines);
                     specialityChoiceBox.getSelectionModel().select("PZKS");
                  }
-                 if (tmp.equals("Faculty of Mathematics"))
+                 if (tmp.equals("Mathematics"))
                  {
                     specialityChoiceBox.setItems(listOfMath);
                     specialityChoiceBox.getSelectionModel().select("Department of Applied Mathematics");
                  }
 
-                 if (tmp.equals("Physics Department"))
+                 if (tmp.equals("Physics"))
                  {
                     specialityChoiceBox.setItems(listOfPhysics);
                     specialityChoiceBox.getSelectionModel().select("Department of Physics");
                  }
 
             }
-    });*/
+            
+    });
+         
+    }
+       
+        
     }    
     
-}
+
