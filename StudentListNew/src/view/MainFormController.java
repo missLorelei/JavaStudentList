@@ -5,11 +5,22 @@
 
 package view;
 
+import flexjson.JSONSerializer;
 import java.io.IOException;
 import java.lang.Object.*;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,16 +33,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-
-
 import javafx.stage.Stage;
-import model.Student;
 import model.StaticData;
+import model.Student;
 
 /**
  *
@@ -71,6 +80,13 @@ public class MainFormController implements Initializable
     @FXML
     private TableColumn<Student, String> tableDate;
     
+    public int selectedId;
+    
+    public Student st;
+    
+    @FXML
+    private MenuItem sendStudent;
+    
     @FXML
      void onClickButtonNew(ActionEvent event) throws IOException
     {
@@ -96,6 +112,8 @@ public class MainFormController implements Initializable
         stage.getIcons().add(icon);
         stage.setResizable(false);
         stage.setScene(scene);
+        
+            
         stage.show();
     }
     @FXML
@@ -110,6 +128,17 @@ public class MainFormController implements Initializable
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 // ... user chose OK
+                
+                Class.forName("org.h2.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:h2:~/DB");
+                String sql = "DELETE FROM students WHERE id = ?";
+                
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                pstmt.setInt(1, selectedId);
+                pstmt.executeUpdate();
+                
+                conn.close();
+                
                 StaticData.data.remove(StaticData.selectedRow);
             } else {
                 // ... user chose CANCEL or closed the dialog
@@ -120,34 +149,73 @@ public class MainFormController implements Initializable
         }
     }
     
-    
-    
+     @FXML
+    void onCickSendStudent(ActionEvent event) throws IOException
+    {
+        Stage stage = new Stage();       
+        
+        JSONSerializer serializer = new JSONSerializer();
+        String json = serializer.serialize(st);
+        stage.setUserData(json);
+        
+        FXMLDocumentController(stage, "/view/SendStudentView.fxml");
+    }
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        
+  
         tableSurname.setCellValueFactory(new PropertyValueFactory<Student, String>("Surname"));
         tableGroup.setCellValueFactory(new PropertyValueFactory<Student, String>("Group"));
         tableDate.setCellValueFactory(new PropertyValueFactory<Student, String>("DelayDate"));
         table.setItems(StaticData.data);
-        Student st1 = new Student("Karin", "Wittal", "1996-08-03", "Computer science", "PZKS", "Second","243", "2015-02-01");
-        Student st2 = new Student("Konstantin", "Vikyrchak", "1995-09-09", "Computer science", "PZKS", "Second","243", "2015-03-02");
-        Student st3 = new Student("Artem", "Dzhuran", "1996-04-07", "Computer science", "PZKS", "Second","243", "2015-03-29");
-        Student st4 = new Student("Vanya", "Balan", "1996-10-09", "Computer science", "PZKS", "Second","243", "2015-03-18");
-        StaticData.data.add(st1);
-        StaticData.data.add(st2);
-        StaticData.data.add(st3);
-        StaticData.data.add(st4);
-
+      
+        st = new Student();
+        
+        ArrayList<Student> list = new ArrayList<Student>();
+        try {
+            Class.forName("org.h2.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:h2:~/DB");
+            Statement stat = conn.createStatement();
+            
+            ResultSet rs;
+            rs = stat.executeQuery("select * from students");
+            while (rs.next()) {
+                System.out.println(rs.getString("name"));
+                
+                
+                Student a = new Student();
+                a.setId(rs.getInt("id"));
+                a.setName(rs.getString("name"));
+                a.setSurname(rs.getString("surname"));
+                a.setBirthday(rs.getString("birthday"));
+                a.setDepartment(rs.getString("department"));
+                a.setGroup(rs.getString("groupz"));
+                a.setSpeciality(rs.getString("speciality"));
+                a.setSpeciality(rs.getString("course"));
+                a.setDelayDate(rs.getString("delayz"));
+                
+                list.add(a);   
+            }
+            
+            StaticData.data.addAll(list);
+            stat.close();
+            conn.close();
+ 
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 //======Event change selected row        
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); // just in case you didnt already set the selection model to multiple selection.
         table.getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Integer> change) {
-                Student st = new Student();
+               // st = new Student();
                 int row = 0;
                 try {
                     String tmp = change.getList().toString();
@@ -168,10 +236,11 @@ public class MainFormController implements Initializable
                 labelSpeciality.setText(st.getSpeciality());
                 
                 labelGroup.setText(st.getGroup());
-               
+                selectedId = st.getId();
                 
                 labelCourse.setText(st.getCourse());
                 labelDelay.setText(st.getDelayDate());
+                
             }
         });
     }   

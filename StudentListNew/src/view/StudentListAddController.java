@@ -6,7 +6,14 @@
 package view;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,13 +22,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Student;
 import model.StaticData;
+import model.Student;
 
 
 
@@ -103,7 +110,36 @@ public class StudentListAddController  implements Initializable
 
             StaticData.data.add(st);
             Stage stage = (Stage) bAdd.getScene().getWindow();
-            //close form Message
+            
+            try {
+                Class.forName("org.h2.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:h2:~/DB");
+                Statement stat = conn.createStatement();        
+                
+                String sql = "INSERT INTO students (name,surname,birthday,department,speciality,course,groupz,delayz) "
+                        + "VALUES(?,?,?,?,?,?,?,?)";
+                
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                pstmt.setString(1, st.getName());
+                pstmt.setString(2, st.getSurname());
+                pstmt.setString(3, st.getBirthday());
+                pstmt.setString(4, st.getDepartment());
+                pstmt.setString(5, st.getSpeciality());
+                pstmt.setString(6, st.getCourse());
+                pstmt.setString(7, st.getGroup());
+                pstmt.setString(8, st.getDelayDate());
+
+                pstmt.executeUpdate();
+                stat.close();
+                conn.close();
+                
+                
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(StudentListAddController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentListAddController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             stage.close();
 
         }
