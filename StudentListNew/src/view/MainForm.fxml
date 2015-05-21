@@ -25,6 +25,7 @@
              <Menu mnemonicParsing="false" text="File">
                <items>
                  <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem fx:id="sendStudent" mnemonicParsing="false" onAction="#onCickSendStudent" text="Send to server" />
                </items>
              </Menu>
              <Menu mnemonicParsing="false" text="Edit">
@@ -56,19 +57,19 @@
                </AnchorPane>
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="440.0" style="-fx-background-color: #c0ffa7;">
                   <children>
-                     <VBox layoutX="291.0" layoutY="54.0" prefHeight="213.0" prefWidth="122.0" spacing="10.0">
+                     <VBox layoutX="292.0" layoutY="54.0" prefHeight="213.0" prefWidth="122.0" spacing="10.0">
                         <children>
-                           <Button fx:id="bNew" mnemonicParsing="false" onAction="#onClickButtonNew" prefHeight="69.0" prefWidth="115.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="New">
+                           <Button fx:id="bNew" mnemonicParsing="false" onAction="#onClickButtonNew" prefHeight="43.0" prefWidth="122.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="New">
                               <font>
                                  <Font name="Buxton Sketch" size="30.0" />
                               </font>
                               </Button>
-                           <Button fx:id="bEdit" mnemonicParsing="false" onAction="#onClickButtonEdit" prefHeight="69.0" prefWidth="115.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="Edit">
+                           <Button fx:id="bEdit" mnemonicParsing="false" onAction="#onClickButtonEdit" prefHeight="60.0" prefWidth="115.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="Edit">
                               <font>
                                  <Font name="Buxton Sketch" size="30.0" />
                               </font>
                               </Button>
-                           <Button fx:id="bDelete" mnemonicParsing="false" onAction="#onClickButtonDelete" prefHeight="69.0" prefWidth="115.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="Delete">
+                           <Button fx:id="bDelete" mnemonicParsing="false" onAction="#onClickButtonDelete" prefHeight="60.0" prefWidth="115.0" style="-fx-background-color: #7de654; -fx-border-color: #000000;" text="Delete">
                               <font>
                                  <Font name="Buxton Sketch" size="30.0" />
                               </font>
