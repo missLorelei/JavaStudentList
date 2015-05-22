@@ -17,4 +17,6 @@ public class StaticData
     public static int selectedRow = 0;
      //list
     public static ObservableList<Student> data = FXCollections.observableArrayList();
+    
+    public static String jsonedStudent = null;
 }

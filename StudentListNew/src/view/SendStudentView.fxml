@@ -21,6 +21,6 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="sendButton" layoutX="180.0" layoutY="157.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Send" />
+      <Button fx:id="sendButton" layoutX="180.0" layoutY="157.0" onAction="#onClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Send" />
    </children>
 </AnchorPane>

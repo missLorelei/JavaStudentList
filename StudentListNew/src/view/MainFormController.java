@@ -157,6 +157,7 @@ public class MainFormController implements Initializable
         JSONSerializer serializer = new JSONSerializer();
         String json = serializer.serialize(st);
         stage.setUserData(json);
+        StaticData.jsonedStudent = json;
         
         FXMLDocumentController(stage, "/view/SendStudentView.fxml");
     }
@@ -207,6 +208,8 @@ public class MainFormController implements Initializable
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Database connection error");
             Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
