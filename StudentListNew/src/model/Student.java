@@ -1,33 +1,36 @@
-/*
- * Karin Wittal 
- * Group 243
- */
-
 package model;
 
-/**
- *
- * @author Карина
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "STUDENTS")
 public class Student            //class that include methods of student profile
 {
-    
+    @Id @GeneratedValue
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "surname")
     private String surname;
+    @Column(name = "birthday")
     private String birthday;
+    @Column(name = "group")
     private String group;
+    @Column(name = "department")
     private String department;
+    @Column(name = "course")
     private String course;
+    @Column(name = "speciality")
     private String speciality;
+    @Column(name = "dateOfDelay")
     private String dateOfDelay;
-    
         
     public Student()
     {
                 
     }
     
-        
     public Student(String name, String surname, String birthday,  
                    String department,  String speciality,String course,String group, String dateOfDelay )
     {
@@ -104,7 +107,5 @@ public class Student            //class that include methods of student profile
     public void setDelayDate(String dateOfDelay) {
         this.dateOfDelay = dateOfDelay;
     }
-    
-    
-    
+   
 }

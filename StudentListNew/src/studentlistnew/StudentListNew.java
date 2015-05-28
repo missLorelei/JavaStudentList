@@ -11,6 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.Student;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
  *
@@ -18,8 +21,11 @@ import javafx.stage.Stage;
  */
 public class StudentListNew extends Application {
     
+    private static SessionFactory factory; 
+    
     @Override
     public void start(Stage stage) throws Exception {
+        
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainForm.fxml"));
         
         Scene scene = new Scene(root);
