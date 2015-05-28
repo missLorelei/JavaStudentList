@@ -141,7 +141,6 @@ public class StudentListAddController  implements Initializable
             }
 
             stage.close();
-
         }
         else
         {

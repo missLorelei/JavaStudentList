@@ -32,7 +32,7 @@ public class StudentListNew extends Application {
         
         Scene scene = new Scene(root);
         
-        stage.setTitle("Karin Wittal form");
+        stage.setTitle("Artem Dzhuran form");
         Image icon = new Image(getClass().getResourceAsStream("/images/logo.png"));
         stage.getIcons().add(icon);
         stage.setResizable(false);

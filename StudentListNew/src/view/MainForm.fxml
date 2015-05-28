@@ -22,10 +22,11 @@
       <top>
          <MenuBar BorderPane.alignment="CENTER">
            <menus>
-             <Menu mnemonicParsing="false" text="File">
+             <Menu mnemonicParsing="false" text="Menu">
                <items>
                  <MenuItem mnemonicParsing="false" text="Close" />
                         <MenuItem fx:id="sendStudent" mnemonicParsing="false" onAction="#onCickSendStudent" text="Send to server" />
+                        <MenuItem fx:id="checkDb" mnemonicParsing="false" onAction="#onCheckConnection" text="Check connection to DB" />
                </items>
              </Menu>
              <Menu mnemonicParsing="false" text="Edit">

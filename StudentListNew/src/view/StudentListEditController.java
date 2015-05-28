@@ -6,8 +6,15 @@
 package view;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.Initializable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -83,7 +90,7 @@ public class StudentListEditController implements Initializable  //controller wi
         {
             //не містить
         }
-        
+       // Stage stage = (Stage) bEdit.getScene().getWindow();
         if (!isEmptyFields())
         {
             st.setName(nameField.getText());
@@ -96,10 +103,43 @@ public class StudentListEditController implements Initializable  //controller wi
             st.setDelayDate(dateOfDelay.getValue().toString());
             
             StaticData.data.set(StaticData.selectedRow, st);
-            //StaticData.data.add(st);
+            //StaticData.data.set(st);
             Stage stage = (Stage) bEdit.getScene().getWindow();
             //close form Message
+            //stage.close();
+            try {
+                Class.forName("org.h2.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:h2:~/DB");
+                Statement stat = conn.createStatement();          
+                
+                String sql = "UPDATE students SET name=?,surname=?,birthday=?,department=?,speciality=?,course=?,groupz=?,delayz=? WHERE id = ?";
+                
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+               
+                pstmt.setString(1, st.getName());
+                pstmt.setString(2, st.getSurname());
+                pstmt.setString(3, st.getBirthday());
+                pstmt.setString(4, st.getDepartment());
+                pstmt.setString(5, st.getSpeciality());
+                pstmt.setString(6, st.getCourse());
+                pstmt.setString(7, st.getGroup());
+                pstmt.setString(8, st.getDelayDate());
+                pstmt.setInt(9, st.getId());
+                
+                pstmt.executeUpdate();
+                stat.close();
+                conn.close();
+  
+            } catch (ClassNotFoundException ex) 
+            {
+                Logger.getLogger(StudentListAddController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) 
+            {
+                Logger.getLogger(StudentListAddController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             stage.close();
+        
 
         }
         else
@@ -110,6 +150,8 @@ public class StudentListEditController implements Initializable  //controller wi
             alert.setContentText("Please check and try again!");
         }
     }
+    
+
     private boolean isEmptyFields()
     {
         if (nameField.getText().isEmpty() ||

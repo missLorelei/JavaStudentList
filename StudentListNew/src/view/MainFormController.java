@@ -88,6 +88,9 @@ public class MainFormController implements Initializable
     private MenuItem sendStudent;
     
     @FXML
+    private MenuItem checkDb;
+    
+    @FXML
      void onClickButtonNew(ActionEvent event) throws IOException
     {
         Stage stage = new Stage();
@@ -160,6 +163,32 @@ public class MainFormController implements Initializable
         StaticData.jsonedStudent = json;
         
         FXMLDocumentController(stage, "/view/SendStudentView.fxml");
+    }
+    
+    @FXML
+    void onCheckConnection(ActionEvent event) throws IOException
+    {
+        try {
+            Class.forName("org.h2.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:h2:~/DB");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hooray");
+            alert.setHeaderText("Connection succeded");
+            alert.setContentText("Seems like everything is ok");
+            
+            alert.show();
+            
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Oops");
+            alert.setHeaderText("No conneection to db");
+            alert.setContentText("No conneection to db");
+            
+            alert.show();
+        }
     }
     
     

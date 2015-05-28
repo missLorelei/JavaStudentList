@@ -6,12 +6,8 @@
 
 package view;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.SocketException;
-import java.net.URL;
+import java.io.*;
+import java.net.*;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,15 +45,41 @@ public class SendStudentViewController implements Initializable {
         
         try {
             Socket socket = new Socket(host, port);   
+            
+            
+            InputStream sin = socket.getInputStream();
+            OutputStream sout = socket.getOutputStream();
+
+            DataInputStream in = new DataInputStream(sin);
+            DataOutputStream out = new DataOutputStream(sout);
+            
+            /*
 
             OutputStream out = socket.getOutputStream();       
-            PrintWriter output = new PrintWriter(out);         
+            PrintWriter output = new PrintWriter(out);  
+            */
+            String line = "Helo!";
+            int i = 0;
+            while (i < 3) {
+                System.out.println("Sending this line to the server...");
+                out.writeUTF(line); // отсылаем введенную строку текста серверу.
+                out.flush(); // заставляем поток закончить передачу данных.
+                line = in.readUTF(); // ждем пока сервер отошлет строку текста.
+                System.out.println("The server was very polite. It sent me this : " + line);
+                System.out.println();
+                line = json.toString();
+                i++;
 
-            output.println(json);   
-            output.flush();
-            output.close();
+                if (i == 2)
+                line = "GoodBye!";
+                }
+                socket.close();
 
-            socket.close();  
+          /*     output.println(json);   
+                output.flush();
+                output.close();*/
+
+                socket.close();  
         }
         catch(SocketException e2){
             
