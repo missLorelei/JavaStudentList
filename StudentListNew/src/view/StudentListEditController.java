@@ -5,7 +5,10 @@
 
 package view;
 
+import controllers.Factory;
+import controllers.STUDENT;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -34,6 +37,8 @@ public class StudentListEditController implements Initializable  //controller wi
 {
     private Student st = new Student();
     @FXML
+    private ResourceBundle resources;
+    @FXML
     private TextField nameField;
     @FXML
     private TextField surnameField;
@@ -52,7 +57,7 @@ public class StudentListEditController implements Initializable  //controller wi
     @FXML
     private DatePicker dateOfDelay;
     @FXML
-    void onClickEdit(ActionEvent event)    // method that run when we click on edit button
+    void onClickEdit(ActionEvent event) throws SQLException    // method that run when we click on edit button
     {
         if(!nameField.getText().matches("^\\D*$"))
         {
@@ -96,6 +101,15 @@ public class StudentListEditController implements Initializable  //controller wi
             st.setGroup(groupField.getText());
             st.setDelayDate(dateOfDelay.getValue().toString());
             
+            STUDENT p = new STUDENT();
+            p.setID(StaticData.selectedRow);
+            p.setName(st.getName());
+            p.setSurname(st.getSurname());
+            p.setDEPARTMENT(st.getDepartment());
+            p.setINSTITUTE(st.getSpeciality());
+            p.setGroupz(st.getGroup());
+            p.setDelayz(st.getDelayDate());
+            Factory.getInstance().getStudentDAO().updateStudent(p);
             StaticData.data.set(StaticData.selectedRow, st);
             //StaticData.data.add(st);
             Stage stage = (Stage) bEdit.getScene().getWindow();

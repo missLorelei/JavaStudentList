@@ -21,7 +21,6 @@ import org.hibernate.cfg.AnnotationConfiguration;
  */
 public class StudentListNew extends Application {
     
-    private static SessionFactory factory; 
     
     @Override
     public void start(Stage stage) throws Exception {

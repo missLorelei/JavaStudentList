@@ -5,11 +5,22 @@
 
 package view;
 
+import controllers.Factory;
+import controllers.STUDENT;
+
 import java.io.IOException;
 import java.lang.Object.*;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,6 +38,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 
 
 import javafx.stage.Stage;
@@ -39,7 +51,10 @@ import model.StaticData;
  */
 public class MainFormController implements Initializable 
 {
-    
+    private Connection conn = null;
+    private Statement stmt = null;
+    private ResultSet rs = null;
+
     @FXML
     private Label labelName;
     @FXML
@@ -110,7 +125,20 @@ public class MainFormController implements Initializable
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 // ... user chose OK
-                StaticData.data.remove(StaticData.selectedRow);
+                Student st = new Student();
+                    st = StaticData.data.get(StaticData.selectedRow);
+              
+                    STUDENT p = new STUDENT();
+                    p.setID(StaticData.selectedRow);
+                    p.setName(st.getName());
+                    p.setSurname(st.getSurname());
+                    p.setDEPARTMENT(st.getDepartment());
+                    p.setINSTITUTE(st.getSpeciality());
+                    p.setGroupz(st.getGroup());
+                    p.setDelayz(st.getDelayDate());
+                    Factory.getInstance().getStudentDAO().deleteStudent(p);
+                    StaticData.data.remove(StaticData.selectedRow);
+                   
             } else {
                 // ... user chose CANCEL or closed the dialog
             }    
@@ -123,52 +151,60 @@ public class MainFormController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        
-        tableSurname.setCellValueFactory(new PropertyValueFactory<Student, String>("Surname"));
-        tableGroup.setCellValueFactory(new PropertyValueFactory<Student, String>("Group"));
-        tableDate.setCellValueFactory(new PropertyValueFactory<Student, String>("DelayDate"));
-        table.setItems(StaticData.data);
-        Student st1 = new Student("Karin", "Wittal", "1996-08-03", "Computer science", "PZKS", "Second","243", "2015-02-01");
-        Student st2 = new Student("Konstantin", "Vikyrchak", "1995-09-09", "Computer science", "PZKS", "Second","243", "2015-03-02");
-        Student st3 = new Student("Artem", "Dzhuran", "1996-04-07", "Computer science", "PZKS", "Second","243", "2015-03-29");
-        Student st4 = new Student("Vanya", "Balan", "1996-10-09", "Computer science", "PZKS", "Second","243", "2015-03-18");
-        StaticData.data.add(st1);
-        StaticData.data.add(st2);
-        StaticData.data.add(st3);
-        StaticData.data.add(st4);
-
-
-//======Event change selected row        
-        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); // just in case you didnt already set the selection model to multiple selection.
-        table.getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
-            @Override
-            public void onChanged(ListChangeListener.Change<? extends Integer> change) {
-                Student st = new Student();
-                int row = 0;
-                try {
-                    String tmp = change.getList().toString();
-                    char myChar = tmp.charAt(1);
-                    tmp = String.valueOf(myChar);
-                    row = Integer.parseInt(tmp);
-                    StaticData.selectedRow = row;
-                    System.out.println(row);
-                } catch (Exception e) {
-                    System.out.println("Error");
-                }
-
-                st = StaticData.data.get(row);
-                labelName.setText(st.getName());
-                labelSurname.setText(st.getSurname());
-                labelBirthday.setText(st.getBirthday());
-                labelDepartment.setText(st.getDepartment());
-                labelSpeciality.setText(st.getSpeciality());
-                
-                labelGroup.setText(st.getGroup());
-               
-                
-                labelCourse.setText(st.getCourse());
-                labelDelay.setText(st.getDelayDate());
+        try {
+            List<STUDENT> studs = Factory.getInstance().getStudentDAO().getAllStudents();
+            for(int i = 0; i < studs.size(); ++i) {
+                Student st  = new Student(studs.get(i).getName(), studs.get(i).getSurname(),studs.get(i).getBirthday(),studs.get(i).getGroupz(), studs.get(i).getDEPARTMENT(), studs.get(i).getINSTITUTE(),studs.get(i).getCourse(), studs.get(i).getDelayz());
+                StaticData.data.add(st);
             }
-        });
+
+            Properties props = new Properties();
+            
+            
+            
+            tableSurname.setCellValueFactory(new PropertyValueFactory<Student, String>("Surname"));
+            tableGroup.setCellValueFactory(new PropertyValueFactory<Student, String>("Group"));
+            tableDate.setCellValueFactory(new PropertyValueFactory<Student, String>("DelayDate"));
+            table.setItems(StaticData.data);
+            
+            
+            
+            
+            
+//======Event change selected row
+            table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); // just in case you didnt already set the selection model to multiple selection.
+            table.getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends Integer> change) {
+                    Student st = new Student();
+                    int row = 0;
+                    try {
+                        String tmp = change.getList().toString();
+                        char myChar = tmp.charAt(1);
+                        tmp = String.valueOf(myChar);
+                        row = Integer.parseInt(tmp);
+                        StaticData.selectedRow = row;
+                        System.out.println(row);
+                    } catch (Exception e) {
+                        System.out.println("Error");
+                    }
+                    
+                    st = StaticData.data.get(row);
+                    labelName.setText(st.getName());
+                    labelSurname.setText(st.getSurname());
+                    labelBirthday.setText(st.getBirthday());
+                    labelDepartment.setText(st.getDepartment());
+                    labelSpeciality.setText(st.getSpeciality());
+                    
+                    labelGroup.setText(st.getGroup());
+                    
+                    
+                    labelCourse.setText(st.getCourse());
+                    labelDelay.setText(st.getDelayDate());
+                }
+            });
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }   
 }

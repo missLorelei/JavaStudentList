@@ -5,7 +5,13 @@
 
 package view;
 
+import controllers.Factory;
+import controllers.STUDENT;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,6 +38,16 @@ import model.StaticData;
  */
 public class StudentListAddController  implements Initializable
 {
+    private Connection conn = null;
+    private Statement stmt = null;
+    private ResultSet rs = null;
+    
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
+    
     @FXML
     private TextField nameField;
     @FXML
@@ -53,7 +69,7 @@ public class StudentListAddController  implements Initializable
     
     
     @FXML
-     void onClickAdd(ActionEvent event)
+     void onClickAdd(ActionEvent event) throws SQLException
     {
         if(!nameField.getText().matches("^\\D*$"))
         {
@@ -100,7 +116,17 @@ public class StudentListAddController  implements Initializable
                                  course,
                                  groupField.getText(),
                                  dateOfDelay.getValue().toString());
-
+            
+            int id = StaticData.data.size() + 1;
+            STUDENT p = new STUDENT();
+            p.setID(id);
+            p.setName(st.getName());
+            p.setSurname(st.getSurname());
+            p.setDEPARTMENT(st.getDepartment());
+            p.setINSTITUTE(st.getSpeciality());
+            p.setGroupz(st.getGroup());
+            p.setDelayz(st.getDelayDate());
+            Factory.getInstance().getStudentDAO().addStudent(p);
             StaticData.data.add(st);
             Stage stage = (Stage) bAdd.getScene().getWindow();
             //close form Message
